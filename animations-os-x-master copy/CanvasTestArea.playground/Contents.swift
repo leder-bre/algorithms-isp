@@ -1,5 +1,8 @@
 //: Playground - noun: a place where people can play
 
+import Foundation
+import IOKit
+import IOKit.serial
 import Cocoa
 
 /*:

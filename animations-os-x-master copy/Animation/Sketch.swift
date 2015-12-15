@@ -6,6 +6,8 @@
 //  Copyright © 2015 Royal St. George's College. All rights reserved.
 //
 
+import IOKit
+import IOKit.serial
 import Foundation
 
 class Sketch {
@@ -20,9 +22,18 @@ class Sketch {
     var y = [Int](count: 3, repeatedValue: 0)
     var sx = [Int](count: 3, repeatedValue: 1)
     var sy = [Int](count: 3, repeatedValue: 1)
+    var portIterator: io_iterator_t = 0
+    let kernResult = findSerialDevices(kIOSerialBSDAllTypes, serialPortIterator: &portIterator)
+    if kernResult == KERN_SUCCESS {
+    printSerialPaths(portIterator)
+    }
+    
+
+    
     
     // This runs once, equivalent to setup() in Processing
     init() {
+        
         
         // Create canvas object – specify size
         canvas = Canvas(width: 1200, height: 700)
