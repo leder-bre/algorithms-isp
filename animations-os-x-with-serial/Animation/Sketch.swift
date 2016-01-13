@@ -86,14 +86,14 @@ class Sketch : NSObject, ORSSerialPortDelegate {
         p2 = (100*Int(bY)/(canvas.height))
         
         //Calculate Movement
-        if(Int(bY)<bHeight+pHeight/2) {
+        if(Int(bY)<bHeight) {
             bYSpeed *= -1
-            bY = Float(bHeight+pHeight/2)
+            bY = Float(bHeight)
             print("TEENY")
         }
-        if(Int(bY)>canvas.height-bHeight-pHeight/2) {
+        if(Int(bY)>canvas.height-bHeight) {
             bYSpeed *= -1
-            bY = Float(canvas.height-bHeight-pHeight/2)
+            bY = Float(canvas.height-bHeight)
             print("HULK")
         }
         
@@ -103,7 +103,8 @@ class Sketch : NSObject, ORSSerialPortDelegate {
                 bXSpeed *= -1
             }
         }
-        if(Int(bX)<canvas.width && Int(bX)>canvas.width-pHeight) {
+        
+        if(Int(bX)<canvas.width && Int(bX)>canvas.width-pWidth) {
             if(Int(bY)>(p2*(canvas.height-pHeight)/100)){
                 bXSpeed *= -1
             }
@@ -119,7 +120,7 @@ class Sketch : NSObject, ORSSerialPortDelegate {
         canvas.drawRectangle(bottomRightX: 0, bottomRightY: 0, width: canvas.width, height: canvas.height)
         
         canvas.fillColor = Color(hue: Float(canvas.frameCount), saturation: 80, brightness: 90, alpha: 100)
-        canvas.drawEllipse(centreX: Int(bX), centreY: Int(bY)+pHeight/2, width: bWidth, height: bHeight)
+        canvas.drawEllipse(centreX: Int(bX), centreY: Int(bY), width: bWidth, height: bHeight)
         canvas.drawRectangle(bottomRightX: 0, bottomRightY: (p1*(canvas.height-pHeight)/100), width: pWidth, height: pHeight)
         canvas.drawRectangle(bottomRightX: canvas.width-pWidth, bottomRightY: (p2*(canvas.height-pHeight)/100), width: pWidth, height: pHeight)
         
