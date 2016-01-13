@@ -81,28 +81,45 @@ class Sketch : NSObject, ORSSerialPortDelegate {
     
     // Runs repeatedly, equivalent to draw() in Processing
     func draw() {
-        //Movement
-        if(Int(bY)<bHeight) {
+        
+        p1 = (100*Int(bY)/(canvas.height))
+        p2 = (100*Int(bY)/(canvas.height))
+        
+        //Calculate Movement
+        if(Int(bY)<bHeight+pHeight/2) {
             bYSpeed *= -1
-            bY = Float(bHeight)
+            bY = Float(bHeight+pHeight/2)
             print("TEENY")
         }
-        if(Int(bY)>canvas.height-bHeight) {
+        if(Int(bY)>canvas.height-bHeight-pHeight/2) {
             bYSpeed *= -1
-            bY = Float(canvas.height-bHeight)
+            bY = Float(canvas.height-bHeight-pHeight/2)
             print("HULK")
         }
         
+        
+        if(Int(bX)<pWidth && Int(bX)>0) {
+            if(Int(bY)>(p1*(canvas.height-pHeight)/100)){
+                bXSpeed *= -1
+            }
+        }
+        if(Int(bX)<canvas.width && Int(bX)>canvas.width-pHeight) {
+            if(Int(bY)>(p2*(canvas.height-pHeight)/100)){
+                bXSpeed *= -1
+            }
+        }
+        
+        //Move Ball
         bX += bXSpeed
         bY += bYSpeed
         
         //Draw Shapes
         canvas.drawShapesWithBorders = false
-        canvas.fillColor = Color(hue: 0, saturation: 0, brightness: 0, alpha: 5)
+        canvas.fillColor = Color(hue: 0, saturation: 0, brightness: 0, alpha: 100)
         canvas.drawRectangle(bottomRightX: 0, bottomRightY: 0, width: canvas.width, height: canvas.height)
         
         canvas.fillColor = Color(hue: Float(canvas.frameCount), saturation: 80, brightness: 90, alpha: 100)
-        canvas.drawEllipse(centreX: Int(bX), centreY: Int(bY), width: bWidth, height: bHeight)
+        canvas.drawEllipse(centreX: Int(bX), centreY: Int(bY)+pHeight/2, width: bWidth, height: bHeight)
         canvas.drawRectangle(bottomRightX: 0, bottomRightY: (p1*(canvas.height-pHeight)/100), width: pWidth, height: pHeight)
         canvas.drawRectangle(bottomRightX: canvas.width-pWidth, bottomRightY: (p2*(canvas.height-pHeight)/100), width: pWidth, height: pHeight)
         
