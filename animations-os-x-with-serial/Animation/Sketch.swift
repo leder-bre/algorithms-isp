@@ -28,13 +28,15 @@ class Sketch : NSObject, ORSSerialPortDelegate {
     var serialBuffer : String = ""
     var p1 = 100
     var p2 = 100
-    var pWidth = 50
-    var pHeight = 100
+    let pWidth = 50
+    let pHeight = 100
     var pColor = arc4random_uniform(360)
     var bX = Float(0)
     var bY = Float(0)
-    var bYSpeed = Float(1)
-    var bXSpeed = Float(10)
+    var bYSpeed = Float(2)
+    var bXSpeed = Float(4)
+    let bWidth = 10
+    let bHeight = 10
     // This runs once, equivalent to setup() in Processing
     override init() {
         
@@ -79,12 +81,28 @@ class Sketch : NSObject, ORSSerialPortDelegate {
     
     // Runs repeatedly, equivalent to draw() in Processing
     func draw() {
+        //Movement
+        if(Int(bY)<bHeight) {
+            bYSpeed *= -1
+            bY = Float(bHeight)
+            print("TEENY")
+        }
+        if(Int(bY)>canvas.height-bHeight) {
+            bYSpeed *= -1
+            bY = Float(canvas.height-bHeight)
+            print("HULK")
+        }
         
+        bX += bXSpeed
+        bY += bYSpeed
+        
+        //Draw Shapes
         canvas.drawShapesWithBorders = false
         canvas.fillColor = Color(hue: 0, saturation: 0, brightness: 0, alpha: 5)
         canvas.drawRectangle(bottomRightX: 0, bottomRightY: 0, width: canvas.width, height: canvas.height)
         
         canvas.fillColor = Color(hue: Float(canvas.frameCount), saturation: 80, brightness: 90, alpha: 100)
+        canvas.drawEllipse(centreX: Int(bX), centreY: Int(bY), width: bWidth, height: bHeight)
         canvas.drawRectangle(bottomRightX: 0, bottomRightY: (p1*(canvas.height-pHeight)/100), width: pWidth, height: pHeight)
         canvas.drawRectangle(bottomRightX: canvas.width-pWidth, bottomRightY: (p2*(canvas.height-pHeight)/100), width: pWidth, height: pHeight)
         

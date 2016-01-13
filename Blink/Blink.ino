@@ -3,7 +3,6 @@ Arduino Turn LED On/Off using Serial Commands
 Created April 22, 2015
 Hammad Tariq, Incubator (Pakistan)
 
-void setup() {
 It's a simple sketch which waits for a character on serial
 and in case of a desirable character, it turns an LED on/off.
 
