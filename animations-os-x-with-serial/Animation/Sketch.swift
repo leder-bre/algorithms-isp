@@ -37,6 +37,8 @@ class Sketch : NSObject, ORSSerialPortDelegate {
     var bXSpeed = Float(4)
     let bWidth = 10
     let bHeight = 10
+    var score1 = 0
+    var score2 = 0
     // This runs once, equivalent to setup() in Processing
     override init() {
         
@@ -100,13 +102,29 @@ class Sketch : NSObject, ORSSerialPortDelegate {
         
         if(Int(bX)<pWidth && Int(bX)>0) {
             if(Int(bY)>(p1*(canvas.height-pHeight)/100)){
-                bXSpeed *= -1
+                bXSpeed *= -1.05
+                bYSpeed *= 1.1
             }
+        }
+        
+        if(Int(bX)<0-100) {
+            score2 += 1
+            bX = canvas.width/2
+            bXSpeed = Float(4)
+            bYSpeed = Float(2)
+        }
+        
+        if(Int(bX)>canvas.width+100) {
+            score1 += 1
+            bX = canvas.width/2
+            bXSpeed = Float(4)
+            bYSpeed = Float(2)
         }
         
         if(Int(bX)<canvas.width && Int(bX)>canvas.width-pWidth) {
             if(Int(bY)>(p2*(canvas.height-pHeight)/100)){
-                bXSpeed *= -1
+                bXSpeed *= -1.05
+                bYSpeed *= 1.1
             }
         }
         
@@ -123,6 +141,10 @@ class Sketch : NSObject, ORSSerialPortDelegate {
         canvas.drawEllipse(centreX: Int(bX), centreY: Int(bY), width: bWidth, height: bHeight)
         canvas.drawRectangle(bottomRightX: 0, bottomRightY: (p1*(canvas.height-pHeight)/100), width: pWidth, height: pHeight)
         canvas.drawRectangle(bottomRightX: canvas.width-pWidth, bottomRightY: (p2*(canvas.height-pHeight)/100), width: pWidth, height: pHeight)
+        
+        //Draw Score
+        canvas.textColor = Color(hue: 0, saturation: 0, brightness: 100, alpha: 100)
+        canvas.drawText(message: "Test 123", size: 50, x: canvas.width/2, y: canvas.height/2)
         
       /*
         canvas.drawShapesWithBorders = false
@@ -161,7 +183,7 @@ class Sketch : NSObject, ORSSerialPortDelegate {
                     p2 = p2 - (p2%100)
                     // Reset the string that is the buffer for data received from serial port
                     serialBuffer = ""
-                    
+                        
                 } else {
                     
                     // Have not received all the data yet, append what was received to buffer
