@@ -109,14 +109,14 @@ class Sketch : NSObject, ORSSerialPortDelegate {
         
         if(Int(bX)<0-100) {
             score2 += 1
-            bX = canvas.width/2
+            bX = Float(canvas.width/2)
             bXSpeed = Float(4)
             bYSpeed = Float(2)
         }
         
         if(Int(bX)>canvas.width+100) {
             score1 += 1
-            bX = canvas.width/2
+            bX = Float(canvas.width/2)
             bXSpeed = Float(4)
             bYSpeed = Float(2)
         }
@@ -144,7 +144,8 @@ class Sketch : NSObject, ORSSerialPortDelegate {
         
         //Draw Score
         canvas.textColor = Color(hue: 0, saturation: 0, brightness: 100, alpha: 100)
-        canvas.drawText(message: "Test 123", size: 50, x: canvas.width/2, y: canvas.height/2)
+        canvas.drawText(message: String(score2), size: 20, x: canvas.width-60, y: canvas.height-30)
+        canvas.drawText(message: String(score1), size: 20, x: 60, y: canvas.height-30)
         
       /*
         canvas.drawShapesWithBorders = false
