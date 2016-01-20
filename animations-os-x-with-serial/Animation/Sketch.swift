@@ -39,6 +39,7 @@ class Sketch : NSObject, ORSSerialPortDelegate {
     let bHeight = 10
     var score1 = 0
     var score2 = 0
+    var x = 0
     // This runs once, equivalent to setup() in Processing
     override init() {
         
@@ -84,7 +85,10 @@ class Sketch : NSObject, ORSSerialPortDelegate {
     // Runs repeatedly, equivalent to draw() in Processing
     func draw() {
         
-        p1 = (100*Int(bY)/(canvas.height))
+        print(String(x))
+
+        
+        //p1 = (100*Int(bY)/(canvas.height))
         p2 = (100*Int(bY)/(canvas.height))
         
         //Calculate Movement
@@ -176,8 +180,10 @@ class Sketch : NSObject, ORSSerialPortDelegate {
                     
                     // Entire value sent from Arduino board received, assign to
                     // variable that controls the vertical position of the circle on screen
-                    p1 = Int(serialBuffer)!
+                    x = Int(serialBuffer)!
+                    p1 = x
                     p2 = p1
+                    
                     while(p1>99) {
                         p1 -= 100
                     }
