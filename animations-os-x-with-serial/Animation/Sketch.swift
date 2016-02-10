@@ -88,17 +88,17 @@ class Sketch : NSObject, ORSSerialPortDelegate {
         print(String(x))
 
         
-        //p1 = (100*Int(bY)/(canvas.height))
+        p1 = (100*Int(bY)/(canvas.height))
         p2 = (100*Int(bY)/(canvas.height))
         
         //Calculate Movement
         if(Int(bY)<bHeight) {
-            bYSpeed *= -1
+            bYSpeed *= -1.0
             bY = Float(bHeight)
             print("TEENY")
         }
         if(Int(bY)>canvas.height-bHeight) {
-            bYSpeed *= -1
+            bYSpeed *= -1.0
             bY = Float(canvas.height-bHeight)
             print("HULK")
         }
